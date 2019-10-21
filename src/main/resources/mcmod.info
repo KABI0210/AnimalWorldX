@@ -1,16 +1,19 @@
 [
-{
-  "modid": "animalworldx",
-  "name": "Animal World X",
-  "description": "Example placeholder mod.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
-}
+  {
+    "modid": "animalworldx",
+    "name": "AnimalWorldX",
+    "description": "For animals",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/KABI0210/AnimalWorldX",
+    "updateUrl": "",
+    "authorList": [
+      "kabi0210",
+      "ksgfk"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
 ]
