@@ -6,7 +6,7 @@
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "https://github.com/KABI0210/AnimalWorldX",
-    "updateUrl": "",
+    "updateUrl": "https://api.github.com/repos/KABI0210/AnimalWorldX/releases",
     "authorList": [
       "kabi0210",
       "ksgfk"
