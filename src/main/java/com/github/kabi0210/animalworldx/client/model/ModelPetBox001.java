@@ -26,25 +26,25 @@ public class ModelPetBox001 extends ModelBase {
         e1.mirror = false;
         setRotation(e1, 0F, 0F, 0F);
         e2 = new ModelRenderer(this, 0, 8);
-        e2.setRotationPoint(-4F, 32.5F, -5F);
+        e2.setRotationPoint(-2F, 13F, -5F);
         e2.addBox(0F, -2F, 0F, 8, 2, 8);
         e2.setTextureSize(64, 64);
         e2.mirror = false;
         setRotation(e2, 0F, 0F, 0F);
         e3 = new ModelRenderer(this, 0, 5);
-        e3.setRotationPoint(-7F, 30F, -2F);
+        e3.setRotationPoint(-7F, 18F, -2F);
         e3.addBox(0F, -0.5F, 0F, 7, 1, 2);
         e3.setTextureSize(64, 64);
         e3.mirror = false;
         setRotation(e3, 0F, 0F, 0F);
         e4 = new ModelRenderer(this, 0, 2);
-        e4.setRotationPoint(-1.5F, 30.5F, -3.5F);
+        e4.setRotationPoint(-1.5F, 17F, -3.5F);
         e4.addBox(0F, -1.5F, 0F, 1, 2, 1);
         e4.setTextureSize(64, 64);
         e4.mirror = false;
         setRotation(e4, 0F, 0F, 0F);
         e5 = new ModelRenderer(this, 0, 2);
-        e5.setRotationPoint(-1.5F, 30.5F, 0.5F);
+        e5.setRotationPoint(-1.5F, 17F, 0.5F);
         e5.addBox(0F, -1.5F, 0F, 1, 2, 1);
         e5.setTextureSize(64, 64);
         e5.mirror = false;
@@ -73,6 +73,7 @@ public class ModelPetBox001 extends ModelBase {
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
     {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+        this.e2.rotateAngleZ=0.7f;
     }
  
 }
