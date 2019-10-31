@@ -1,2 +1,8 @@
+# Items
+item.animalworldx.legend_gold_ingot.name=§eGold Legend
+# Blocks
+tile.animalworldx.nature_block.name=§aNature power
 # Entities
 entity.animalworldx.pet_box_001.name=Pet box
+# Item Group
+itemGroup.animalworldx.main=Animal World

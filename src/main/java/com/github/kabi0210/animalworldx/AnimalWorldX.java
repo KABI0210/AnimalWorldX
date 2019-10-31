@@ -1,7 +1,11 @@
 package com.github.kabi0210.animalworldx;
 
+import com.github.kabi0210.animalworldx.annotations.RegisterManager;
 import com.github.kabi0210.animalworldx.common.CommonProxy;
+import com.github.kabi0210.animalworldx.common.init.AWItems;
 import com.github.kabi0210.animalworldx.utility.AnimalWorldXUpdate;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -35,8 +39,15 @@ public enum AnimalWorldX {
 
     private AnimalWorldXUpdate update;
 
+    public final CreativeTabs mainTab = new CreativeTabs(MOD_ID + ".main") {
+        @Override
+        public ItemStack createIcon() {
+            return new ItemStack(AWItems.test);
+        }
+    };
+
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
+    public void preInit(FMLPreInitializationEvent event) throws IllegalAccessException, ClassNotFoundException {
         proxy.preInit(event);
     }
 
@@ -54,6 +65,7 @@ public enum AnimalWorldX {
     public void gameStart(FMLLoadCompleteEvent event) {
         update = new AnimalWorldXUpdate();
         new Thread(update).start();
+        RegisterManager.clean();
     }
 
     @Mod.InstanceFactory
