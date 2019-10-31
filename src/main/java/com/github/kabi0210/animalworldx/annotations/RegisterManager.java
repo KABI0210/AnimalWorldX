@@ -25,8 +25,6 @@ import java.util.stream.Collectors;
 public class RegisterManager {
     private static RegisterManager instance = new RegisterManager();
 
-    private ASMDataTable asmDataTable;
-
     private List<BiConsumer<Field, Object>> registerBehavior = new ArrayList<>();
     private List<Item> items = new ArrayList<>();
     private List<Block> blocks = new ArrayList<>();
@@ -50,11 +48,10 @@ public class RegisterManager {
     }
 
     public void processRegistries(ASMDataTable asmDataTable) throws IllegalAccessException, ClassNotFoundException {
-        this.asmDataTable = asmDataTable;
-        normalRegistries();
+        normalRegistries(asmDataTable);
     }
 
-    private void normalRegistries() throws ClassNotFoundException, IllegalAccessException {
+    private void normalRegistries(ASMDataTable asmDataTable) throws ClassNotFoundException, IllegalAccessException {
         for (ASMDataTable.ASMData asmData : asmDataTable.getAll(Registry.class.getName())) {
             Class<?> clz = Class.forName(asmData.getClassName());
             for (Field registry : clz.getFields()) {
