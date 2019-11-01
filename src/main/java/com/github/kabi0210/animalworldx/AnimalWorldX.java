@@ -64,7 +64,7 @@ public enum AnimalWorldX {
     @Mod.EventHandler
     public void gameStart(FMLLoadCompleteEvent event) {
         update = new AnimalWorldXUpdate();
-        new Thread(update).start();
+        update.StartCheck();
         RegisterManager.clean();
     }
 

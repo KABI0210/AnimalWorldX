@@ -27,6 +27,10 @@ public class AnimalWorldXUpdate implements Runnable {
         logger = AnimalWorldX.getLogger();
     }
 
+    public void StartCheck() {
+        new Thread(this).start();
+    }
+
     private void getUpdateJson() {
         StringBuilder result = new StringBuilder();
         try {
@@ -42,6 +46,7 @@ public class AnimalWorldXUpdate implements Runnable {
             }
         } catch (Exception e) {
             logger.warn(e.getMessage(), e);
+            return;
         }
         JsonArray elements = new JsonParser().parse(result.toString()).getAsJsonArray();
         for (JsonElement e : elements) {
