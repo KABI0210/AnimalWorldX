@@ -72,7 +72,7 @@ public class AnimalWorldXUpdate implements Runnable {
         }
     }
 
-    public boolean isCanUpdate() {
+    public boolean canUpdate() {
         return canUpdate;
     }
 

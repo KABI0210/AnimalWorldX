@@ -1,6 +1,5 @@
 package com.github.kabi0210.animalworldx;
 
-import com.github.kabi0210.animalworldx.annotations.RegisterManager;
 import com.github.kabi0210.animalworldx.common.CommonProxy;
 import com.github.kabi0210.animalworldx.common.init.AWItems;
 import com.github.kabi0210.animalworldx.utility.AnimalWorldXUpdate;
@@ -19,7 +18,8 @@ import org.apache.logging.log4j.Logger;
         modid = AnimalWorldX.MOD_ID,
         name = AnimalWorldX.MOD_NAME,
         version = AnimalWorldX.VERSION,
-        updateJSON = AnimalWorldX.UPDATEJSON
+        updateJSON = AnimalWorldX.UPDATEJSON,
+        dependencies = "required-after:dawnfoundation"
 )
 public enum AnimalWorldX {
     INSTANCE;
@@ -42,12 +42,12 @@ public enum AnimalWorldX {
     public final CreativeTabs mainTab = new CreativeTabs(MOD_ID + ".main") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(AWItems.test);
+            return new ItemStack(AWItems.LegendGoldIngot);
         }
     };
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) throws IllegalAccessException, ClassNotFoundException {
+    public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
     }
 
@@ -65,7 +65,6 @@ public enum AnimalWorldX {
     public void gameStart(FMLLoadCompleteEvent event) {
         update = new AnimalWorldXUpdate();
         update.StartCheck();
-        RegisterManager.clean();
     }
 
     @Mod.InstanceFactory

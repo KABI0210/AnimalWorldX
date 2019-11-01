@@ -1,9 +1,9 @@
 package com.github.kabi0210.animalworldx.client.render;
 
 import com.github.kabi0210.animalworldx.AnimalWorldX;
-import com.github.kabi0210.animalworldx.annotations.EntityRenderer;
 import com.github.kabi0210.animalworldx.client.model.ModelPetBox001;
 import com.github.kabi0210.animalworldx.common.entity.EntityPetBox001;
+import com.github.ksgfk.dawnfoundation.api.annotations.EntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

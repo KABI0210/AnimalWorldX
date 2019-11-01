@@ -1,6 +1,7 @@
 package com.github.kabi0210.animalworldx.common;
 
-import com.github.kabi0210.animalworldx.annotations.RegisterManager;
+import com.github.kabi0210.animalworldx.AnimalWorldX;
+import com.github.ksgfk.dawnfoundation.api.annotations.RegisterManager;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -13,9 +14,7 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 
 @Mod.EventBusSubscriber
 public class CommonProxy {
-    public void preInit(FMLPreInitializationEvent event) throws ClassNotFoundException, IllegalAccessException {
-        RegisterManager.getInstance().processRegistries(event.getAsmData());
-        RegisterManager.getInstance().registerOreDict();
+    public void preInit(FMLPreInitializationEvent event) {
     }
 
     public void init(FMLInitializationEvent event) {
@@ -26,16 +25,16 @@ public class CommonProxy {
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        RegisterManager.getInstance().registerItems(event);
+        RegisterManager.getInstance().registerItems(AnimalWorldX.MOD_ID, event);
     }
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
-        RegisterManager.getInstance().registerBlocks(event);
+        RegisterManager.getInstance().registerBlocks(AnimalWorldX.MOD_ID, event);
     }
 
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
-        RegisterManager.getInstance().registerEntities(event);
+        RegisterManager.getInstance().registerEntities(AnimalWorldX.MOD_ID, event);
     }
 }
