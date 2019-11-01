@@ -1,6 +1,7 @@
 package com.github.kabi0210.animalworldx.client.render;
 
 import com.github.kabi0210.animalworldx.AnimalWorldX;
+import com.github.kabi0210.animalworldx.annotations.EntityRenderer;
 import com.github.kabi0210.animalworldx.client.model.ModelPetBox001;
 import com.github.kabi0210.animalworldx.common.entity.EntityPetBox001;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -9,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
+@EntityRenderer(entityClass = EntityPetBox001.class)
 public class RenderPetBox001 extends RenderLiving<EntityPetBox001> {
     private static final ResourceLocation local = new ResourceLocation(AnimalWorldX.MOD_ID, "textures/entity/pet_box_001.png");
 
