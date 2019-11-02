@@ -2,7 +2,7 @@ package com.github.kabi0210.animalworldx;
 
 import com.github.kabi0210.animalworldx.common.CommonProxy;
 import com.github.kabi0210.animalworldx.common.init.AWItems;
-import com.github.kabi0210.animalworldx.utility.AnimalWorldXUpdate;
+import com.github.ksgfk.dawnfoundation.api.utility.GithubReleaseUpdateCheck;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
@@ -37,8 +37,6 @@ public enum AnimalWorldX {
 
     private static Logger logger = LogManager.getLogger(MOD_ID);
 
-    private AnimalWorldXUpdate update;
-
     public final CreativeTabs mainTab = new CreativeTabs(MOD_ID + ".main") {
         @Override
         public ItemStack createIcon() {
@@ -63,8 +61,7 @@ public enum AnimalWorldX {
 
     @Mod.EventHandler
     public void gameStart(FMLLoadCompleteEvent event) {
-        update = new AnimalWorldXUpdate();
-        update.StartCheck();
+        GithubReleaseUpdateCheck.getInstance().startCheck(MOD_ID, UPDATE, VERSION, true, logger, null);
     }
 
     @Mod.InstanceFactory
@@ -74,9 +71,5 @@ public enum AnimalWorldX {
 
     public static Logger getLogger() {
         return logger;
-    }
-
-    public AnimalWorldXUpdate getUpdate() {
-        return update;
     }
 }

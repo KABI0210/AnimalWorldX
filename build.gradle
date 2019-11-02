@@ -15,10 +15,10 @@ apply plugin: "net.minecraftforge.gradle.forge"
 
 version = modVersion
 group = modGroup
-archivesBaseName = modBaseName
+archivesBaseName = modBaseName + mcVersion
 
 minecraft {
-    version = project.forgeVersion
+    version = project.mcVersion + "-" + project.forgeVersion
     runDir = "run"
 
     // the mappings can be changed at any time, and must be in the following format.
@@ -37,8 +37,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.ksgfk:DawnFoundation:0.0.3'
-    //dependencies { compile files('E:\\ProjectMC\\mod\\DawnFoundation\\build\\libs\\dawnfoundation-1.12.2-0.0.3.jar')}
+    implementation 'com.github.ksgfk:DawnFoundation:0.0.4.1'
+    //compile files('E:\\ProjectMC\\mod\\DawnFoundation\\build\\libs\\dawnfoundation-1.12.2-0.0.4.1-deobf.jar')
 }
 
 processResources {
