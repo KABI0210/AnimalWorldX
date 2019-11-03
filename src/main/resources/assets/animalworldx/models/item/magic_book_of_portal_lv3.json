@@ -1,0 +1,7 @@
+{
+  "forge_marker": 1,
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "animalworldx:items/magic_book_of_portal_lv3"
+  }
+}
