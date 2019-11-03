@@ -37,8 +37,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.ksgfk:DawnFoundation:0.0.4.1'
-    //compile files('E:\\ProjectMC\\mod\\DawnFoundation\\build\\libs\\dawnfoundation-1.12.2-0.0.4.1-deobf.jar')
+    implementation 'com.github.ksgfk:DawnFoundation:0.0.5'
+    //compile files('E:\\ProjectMC\\mod\\DawnFoundation\\build\\libs\\dawnfoundation-1.12.2-0.0.5-deobf.jar')
 }
 
 processResources {
@@ -62,4 +62,21 @@ processResources {
 
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
+}
+
+task apiJar(type: Jar) {
+    classifier = 'api'
+    from sourceSets.main.output
+    from sourceSets.main.allSource
+    include 'com/github/kabi0210' + modBaseName + '/api/**'
+}
+
+task deobfJar(type: Jar) {
+    from(sourceSets.main.output)
+    archiveName = "${baseName}-${version}-deobf.${extension}"
+}
+
+artifacts {
+    archives apiJar
+    archives deobfJar
 }
