@@ -37,8 +37,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.ksgfk:DawnFoundation:0.0.5'
-    //compile files('E:\\ProjectMC\\mod\\DawnFoundation\\build\\libs\\dawnfoundation-1.12.2-0.0.5-deobf.jar')
+    implementation 'com.github.ksgfk:DawnFoundation:0.0.7'
+    //compile files('E:\\ProjectMC\\mod\\DawnFoundation\\build\\libs\\dawnfoundation-1.12.2-0.0.7-deobf.jar')
 }
 
 processResources {

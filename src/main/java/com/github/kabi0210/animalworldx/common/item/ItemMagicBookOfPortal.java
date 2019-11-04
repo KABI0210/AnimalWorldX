@@ -1,15 +1,18 @@
 package com.github.kabi0210.animalworldx.common.item;
 
+import com.github.kabi0210.animalworldx.AnimalWorldX;
 import com.github.kabi0210.animalworldx.api.ILevelProvider;
+import com.github.kabi0210.animalworldx.common.container.AWGuiHandler;
 import com.github.ksgfk.dawnfoundation.api.annotations.IModelRegistry;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 
 import javax.annotation.Nonnull;
@@ -37,6 +40,17 @@ public class ItemMagicBookOfPortal extends AWBaseItem implements IModelRegistry,
                 items.add(stack);
             }
         }
+    }
+
+    @Nonnull
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+        ActionResult<ItemStack> res = super.onItemRightClick(worldIn, playerIn, handIn);
+        if (!worldIn.isRemote && res.getType() == EnumActionResult.PASS) {
+            playerIn.openGui(AnimalWorldX.getInstance(), AWGuiHandler.MagicBook, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
+            return new ActionResult<>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
+        }
+        return res;
     }
 
     //ILevelProvider
