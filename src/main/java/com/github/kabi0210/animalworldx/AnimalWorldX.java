@@ -5,6 +5,7 @@ import com.github.kabi0210.animalworldx.common.init.AWItems;
 import com.github.ksgfk.dawnfoundation.api.utility.GithubReleaseUpdateCheck;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -40,7 +41,11 @@ public enum AnimalWorldX {
     public final CreativeTabs mainTab = new CreativeTabs(MOD_ID + ".main") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(AWItems.LegendGoldIngot);
+            NBTTagCompound tag = new NBTTagCompound();
+            ItemStack s = new ItemStack(AWItems.MagicBookOfPortal);
+            s.setTagCompound(tag);
+            tag.setString("lv", "lv6");
+            return s;
         }
     };
 

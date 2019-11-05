@@ -6,10 +6,13 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * @author KSGFK create in 2019/11/4
  */
+@SideOnly(Side.CLIENT)
 public class GuiMagicBookPortal extends GuiContainer {
     private static final ResourceLocation Background = new ResourceLocation(AnimalWorldX.MOD_ID, "textures/gui/magic_book_portal.png");
 
