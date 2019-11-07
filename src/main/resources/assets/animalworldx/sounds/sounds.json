@@ -1,0 +1,11 @@
+{
+  "entity_petbox01_death": {
+    "category": "block",
+    "subtitle": "my_mod.sound.a_new_sound",
+    " volume": 80,
+    "sounds": [
+      "my_mod:music/test",
+      "my_mod:music/test1"
+    ]
+  }
+}

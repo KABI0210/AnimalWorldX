@@ -1,6 +1,8 @@
 package com.github.kabi0210.animalworldx.common.entity;
 
 import com.github.kabi0210.animalworldx.AnimalWorldX;
+import com.github.kabi0210.animalworldx.common.EventLoader;
+import com.github.kabi0210.animalworldx.common.init.AWSound;
 import com.github.ksgfk.dawnfoundation.api.annotations.EntityRegistry;
 import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
@@ -81,6 +83,7 @@ public class EntityPetBox001 extends EntityGolem {
         this.dataManager.register(PLAYER_CREATED, Byte.valueOf((byte)0));
     }
 
+    /*任务*/
     protected void updateAITasks()
     {
 
@@ -250,13 +253,14 @@ public class EntityPetBox001 extends EntityGolem {
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        return SoundEvents.ENTITY_IRONGOLEM_HURT;
+        System.out.println("shibai");
+        return AWSound.A_NEW_SOUND;
     }
 
     protected SoundEvent getDeathSound()
     {
-        return SoundEvents.ENTITY_IRONGOLEM_DEATH;
-    }
+        return AWSound.A_NEW_SOUND;
+    }//死亡音效
 
     protected void playStepSound(BlockPos pos, Block blockIn)
     {
