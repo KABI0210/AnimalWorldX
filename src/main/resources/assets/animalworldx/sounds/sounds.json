@@ -1,11 +1,10 @@
 {
-  "entity_petbox01_death": {
+  "entity_box01_death": {
     "category": "block",
-    "subtitle": "my_mod.sound.a_new_sound",
-    " volume": 80,
+    "subtitle": "kabi0210",
     "sounds": [
-      "my_mod:music/test",
-      "my_mod:music/test1"
+      "animalworldx:music/test"
+
     ]
   }
 }

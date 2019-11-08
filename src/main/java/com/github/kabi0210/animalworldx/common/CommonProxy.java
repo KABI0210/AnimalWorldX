@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.registries.GameData;
 
-import static com.github.kabi0210.animalworldx.common.init.AWSound.A_NEW_SOUND;
+import static com.github.kabi0210.animalworldx.common.init.AWSound.BOX01_DEATH_SOUND;
 
 @Mod.EventBusSubscriber
 public class CommonProxy {
@@ -52,6 +52,7 @@ public class CommonProxy {
     }
     @SubscribeEvent
     public static void onSoundEventRegistration(RegistryEvent.Register<SoundEvent> event){
-        event.getRegistry().register(A_NEW_SOUND.setRegistryName(new ResourceLocation("animalworldx", "entity_petbox01_death")));
+       event.getRegistry().register( BOX01_DEATH_SOUND.setRegistryName(new ResourceLocation("animalworldx", "entity_box01_death")));
+
     }
 }

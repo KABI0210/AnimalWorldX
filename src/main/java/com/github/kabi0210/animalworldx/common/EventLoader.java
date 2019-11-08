@@ -23,10 +23,7 @@ public class EventLoader {
         return this.soundName;
     }
 
-    public static void registerSounds()
-    {
-        registerSound("entity.petbox01.death");
-    }
+
 
     private static void registerSound(String soundNameIn)
     {

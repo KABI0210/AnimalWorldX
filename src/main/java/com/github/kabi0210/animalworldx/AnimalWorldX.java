@@ -33,6 +33,7 @@ public enum AnimalWorldX {
     public static final String UPDATE = "https://api.github.com/repos/KABI0210/AnimalWorldX/releases";
     public static final String UPDATEJSON = "https://github.com/KABI0210/AnimalWorldX/blob/master/update.json";
 
+
     @SidedProxy(clientSide = AnimalWorldX.CLIENT, serverSide = AnimalWorldX.COMMON, modId = AnimalWorldX.MOD_ID)
     public static CommonProxy proxy;
 

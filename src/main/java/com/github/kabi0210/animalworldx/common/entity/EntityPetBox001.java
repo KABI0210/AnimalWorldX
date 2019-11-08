@@ -1,6 +1,7 @@
 package com.github.kabi0210.animalworldx.common.entity;
 
 import com.github.kabi0210.animalworldx.AnimalWorldX;
+import com.github.kabi0210.animalworldx.common.CommonProxy;
 import com.github.kabi0210.animalworldx.common.EventLoader;
 import com.github.kabi0210.animalworldx.common.init.AWSound;
 import com.github.ksgfk.dawnfoundation.api.annotations.EntityRegistry;
@@ -23,10 +24,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -38,6 +36,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
+import static com.github.kabi0210.animalworldx.common.init.AWSound.BOX01_DEATH_SOUND;
+
 @EntityRegistry(modId = AnimalWorldX.MOD_ID,
         name = "pet_box_001",
         id = 233,
@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
         eggColor2 = 0,
         canNaturalGenerate = false)
 public class EntityPetBox001 extends EntityGolem {
+
+
     public EntityPetBox001(World worldIn) {
         super(worldIn);
         this.setSize(1F, 1F);
@@ -253,13 +255,17 @@ public class EntityPetBox001 extends EntityGolem {
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        System.out.println("shibai");
-        return AWSound.A_NEW_SOUND;
+
+
+        world.playSound(1.0,  1.0, 1.0, BOX01_DEATH_SOUND, SoundCategory.getByName("block"), 1.5F, 1.5F,false);
+        System.out.println("fk");
+        return AWSound.BOX01_DEATH_SOUND;
     }
 
     protected SoundEvent getDeathSound()
     {
-        return AWSound.A_NEW_SOUND;
+        world.playSound(1.0,  1.0, 1.0, BOX01_DEATH_SOUND, SoundCategory.getByName("block"), 1.5F, 1.5F,false);
+        return AWSound.BOX01_DEATH_SOUND;
     }//死亡音效
 
     protected void playStepSound(BlockPos pos, Block blockIn)
