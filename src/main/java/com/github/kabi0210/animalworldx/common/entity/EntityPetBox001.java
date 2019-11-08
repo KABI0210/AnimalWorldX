@@ -220,15 +220,10 @@ public class EntityPetBox001 extends EntityGolem {
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-
-
-        world.playSound(1.0, 1.0, 1.0, BOX01_DEATH_SOUND, SoundCategory.getByName("block"), 1.5F, 1.5F, false);
-        System.out.println("fk");
         return AWSound.BOX01_DEATH_SOUND;
     }
 
     protected SoundEvent getDeathSound() {
-        world.playSound(1.0, 1.0, 1.0, BOX01_DEATH_SOUND, SoundCategory.getByName("block"), 1.5F, 1.5F, false);
         return AWSound.BOX01_DEATH_SOUND;
     }//死亡音效
 

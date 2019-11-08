@@ -1,0 +1,9 @@
+{
+  "entity_box01_death": {
+    "category": "entity",
+    "subtitle": "animalworldx.sound.entity_box01_death",
+    "sounds": [
+      "animalworldx:entity_box01_death"
+    ]
+  }
+}

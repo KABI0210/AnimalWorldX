@@ -7,3 +7,5 @@ tile.animalworldx.nature_block.name=§a自然之力
 entity.animalworldx.pet_box_001.name=宠物箱子
 # Item Group
 itemGroup.animalworldx.main=动物世界
+# Sounds
+animalworldx.sound.entity_box01_death=宠物死亡
