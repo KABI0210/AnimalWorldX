@@ -49,7 +49,7 @@ public class EntityPetBox001 extends EntityGolem {
 
     public EntityPetBox001(World worldIn) {
         super(worldIn);
-        this.setSize(1F, 1F);
+        this.setSize(0.8F, 0.8F);
     }
 
     protected static final DataParameter<Byte> PLAYER_CREATED = EntityDataManager.<Byte>createKey(EntityIronGolem.class, DataSerializers.BYTE);
@@ -220,7 +220,7 @@ public class EntityPetBox001 extends EntityGolem {
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return AWSound.BOX01_DEATH_SOUND;
+        return AWSound.BOX01_HURT_SOUND;
     }
 
     protected SoundEvent getDeathSound() {
@@ -228,7 +228,7 @@ public class EntityPetBox001 extends EntityGolem {
     }//死亡音效
 
     protected void playStepSound(BlockPos pos, Block blockIn) {
-        this.playSound(SoundEvents.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
+        this.playSound(AWSound.BOX01_HURT_STEP, 1.0F, 1.0F);
     }
 
     @Nullable

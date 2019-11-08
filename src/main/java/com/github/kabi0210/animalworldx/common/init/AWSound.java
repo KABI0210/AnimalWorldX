@@ -8,4 +8,6 @@ import net.minecraft.util.SoundEvent;
 @Registry(modId = AnimalWorldX.MOD_ID)
 public class AWSound {
     public static final SoundEvent BOX01_DEATH_SOUND = new AWBaseSound("entity_box01_death");
+    public static final SoundEvent BOX01_HURT_SOUND = new AWBaseSound("entity_box01_hurt");
+    public static final SoundEvent BOX01_HURT_STEP = new AWBaseSound("entity_box01_step");
 }

@@ -5,5 +5,19 @@
     "sounds": [
       "animalworldx:entity_box01_death"
     ]
+  },
+  "entity_box01_hurt": {
+    "category": "entity",
+    "subtitle": "animalworldx.sound.entity_box01_hurt",
+    "sounds": [
+      "animalworldx:entity_box01_hurt"
+    ]
+  },
+  "entity_box01_step": {
+    "category": "entity",
+    "subtitle": "animalworldx.sound.entity_box01_step",
+    "sounds": [
+      "animalworldx:entity_box01_step"
+    ]
   }
 }
