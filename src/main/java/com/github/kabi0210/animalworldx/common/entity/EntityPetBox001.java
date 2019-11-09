@@ -1,8 +1,6 @@
 package com.github.kabi0210.animalworldx.common.entity;
 
 import com.github.kabi0210.animalworldx.AnimalWorldX;
-import com.github.kabi0210.animalworldx.common.CommonProxy;
-import com.github.kabi0210.animalworldx.common.EventLoader;
 import com.github.kabi0210.animalworldx.common.init.AWSound;
 import com.github.ksgfk.dawnfoundation.api.annotations.EntityRegistry;
 import com.google.common.base.Predicate;
@@ -28,15 +26,11 @@ import net.minecraft.util.*;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.village.Village;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-
-import static com.github.kabi0210.animalworldx.common.init.AWSound.BOX01_DEATH_SOUND;
 
 @EntityRegistry(modId = AnimalWorldX.MOD_ID,
         hasCustomFunction = false,
@@ -52,17 +46,18 @@ public class EntityPetBox001 extends EntityGolem {
         this.setSize(0.8F, 0.8F);
     }
 
+
     protected static final DataParameter<Byte> PLAYER_CREATED = EntityDataManager.<Byte>createKey(EntityIronGolem.class, DataSerializers.BYTE);
     /**
      * deincrements, and a distance-to-home check is done at 0
      */
     private int homeCheckTimer;
     @Nullable
-    Village village;
+
     private int attackTimer;
     private int holdRoseTick;
 
-
+    public double box01_health, box01_speed, box01_Resistance;
     protected void initEntityAI() {
         this.tasks.addTask(1, new EntityAIAttackMelee(this, 1.0D, true));
         this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.9D, 32.0F));
@@ -88,13 +83,65 @@ public class EntityPetBox001 extends EntityGolem {
     protected void updateAITasks() {
 
     }
+    protected byte setExp(){
+        byte exp=9;
+       return exp;
+    }
+
+    protected  void judgeExp(byte exp1){
+        if(exp1==1){
+            box01_health=15.0D;
+            box01_speed=0.45D;
+            box01_Resistance=0.3D;
+        }else if(exp1==2){
+            box01_health=20.0D;
+            box01_speed=0.45D;
+            box01_Resistance=0.4D;
+        }else if(exp1==3){
+            box01_health=25.0D;
+            box01_speed=0.45D;
+            box01_Resistance=0.5D;
+        }else if(exp1==4){
+            box01_health=35.0D;
+            box01_speed=0.35D;
+            box01_Resistance=0.6D;
+        }else if(exp1==5){
+            box01_health=45.0D;
+            box01_speed=0.35D;
+            box01_Resistance=0.7D;
+        }else if(exp1==6){
+            box01_health=55.0D;
+            box01_speed=0.35D;
+            box01_Resistance=0.7D;
+        }else if(exp1==7){
+            box01_health=65.0D;
+            box01_speed=0.3D;
+            box01_Resistance=0.8D;
+        }else if(exp1==8){
+            box01_health=75.0D;
+            box01_speed=0.3D;
+            box01_Resistance=0.9D;
+        }else if(exp1==9){
+            box01_health=85.0D;
+            box01_speed=0.3D;
+            box01_Resistance=0.95;
+        }
+    }
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0D);
-    }
+
+
+        judgeExp(setExp());
+            System.out.println("a:"+ box01_health+"b:"+box01_speed+"c:"+box01_Resistance);
+
+            this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(box01_health);
+            this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(box01_speed);
+            this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(box01_Resistance);
+            System.out.println("a:"+ box01_health+"b:"+box01_speed+"c:"+box01_Resistance);
+          System.out.println("lllllll:"+setExp());
+
+    }//生物属性
 
     /**
      * Decrements the entity's air supply when underwater
@@ -200,9 +247,7 @@ public class EntityPetBox001 extends EntityGolem {
         }
     }
 
-    public Village getVillage() {
-        return this.village;
-    }
+
 
     @SideOnly(Side.CLIENT)
     public int getAttackTimer() {
@@ -221,7 +266,7 @@ public class EntityPetBox001 extends EntityGolem {
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return AWSound.BOX01_HURT_SOUND;
-    }
+    }//受伤音效
 
     protected SoundEvent getDeathSound() {
         return AWSound.BOX01_DEATH_SOUND;
@@ -229,12 +274,12 @@ public class EntityPetBox001 extends EntityGolem {
 
     protected void playStepSound(BlockPos pos, Block blockIn) {
         this.playSound(AWSound.BOX01_HURT_STEP, 1.0F, 1.0F);
-    }
+    }//行走音效
 
     @Nullable
     protected ResourceLocation getLootTable() {
-        return LootTableList.ENTITIES_IRON_GOLEM;
-    }
+       return null;
+    }//掉落物
 
     public int getHoldRoseTick() {
         return this.holdRoseTick;
@@ -258,9 +303,7 @@ public class EntityPetBox001 extends EntityGolem {
      * Called when the mob's health reaches 0.
      */
     public void onDeath(DamageSource cause) {
-        if (!this.isPlayerCreated() && this.attackingPlayer != null && this.village != null) {
-            this.village.modifyPlayerReputation(this.attackingPlayer.getUniqueID(), -5);
-        }
+
 
         super.onDeath(cause);
     }
