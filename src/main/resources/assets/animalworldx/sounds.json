@@ -19,5 +19,12 @@
     "sounds": [
       "animalworldx:entity_box01_step"
     ]
+  },
+  "entity_box01_attack": {
+    "category": "entity",
+    "subtitle": "animalworldx.sound.entity_box01_attack",
+    "sounds": [
+      "animalworldx:entity_box01_attack"
+    ]
   }
 }

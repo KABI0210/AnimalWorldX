@@ -9,5 +9,6 @@ import net.minecraft.util.SoundEvent;
 public class AWSound {
     public static final SoundEvent BOX01_DEATH_SOUND = new AWBaseSound("entity_box01_death");
     public static final SoundEvent BOX01_HURT_SOUND = new AWBaseSound("entity_box01_hurt");
-    public static final SoundEvent BOX01_HURT_STEP = new AWBaseSound("entity_box01_step");
+    public static final SoundEvent BOX01_STEP_SOUND = new AWBaseSound("entity_box01_step");
+    public static final SoundEvent BOX01_ATTACK_SOUND = new AWBaseSound("entity_box01_attack");
 }

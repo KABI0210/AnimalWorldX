@@ -39,12 +39,60 @@ import javax.annotation.Nullable;
         eggColor1 = 0,
         eggColor2 = 0)
 public class EntityPetBox001 extends EntityGolem {
+    protected float pet_width,pet_height,pet_attack_volume;
+    protected byte setExp(){
+        byte exp=1;
+        return exp;
+    }
+    protected  void judgeSound(byte exp1){
+        if(exp1>0&&exp1<=3){
+            pet_attack_volume=0.2F;
+        }else if(exp1<=6){
+            pet_attack_volume=0.6F;
+        }else if(exp1<=9){
+            pet_attack_volume=1.0F;
+        }else{
+            pet_attack_volume=0.1F;
+            System.out.println("警告：宠物攻击音效等级越界");
+        }
 
+    }
+
+    protected  void judgeSize(byte exp1){
+        if(exp1==1){
+            pet_width=0.8F;
+            pet_height=0.8F;
+        }else if(exp1==2){
+            pet_width=0.9F;
+            pet_height=0.9F;
+        }else if(exp1==3){
+            pet_width=1.0F;
+            pet_height=1.0F;
+        }else if(exp1==4){
+            pet_width=1.1F;
+            pet_height=1.1F;
+        }else if(exp1==5){
+            pet_width=1.2F;
+            pet_height=1.2F;
+        }else if(exp1==6){
+            pet_width=1.3F;
+            pet_height=1.3F;
+        }else if(exp1==7||exp1==8||exp1==9){
+            pet_width=1.5F;
+            pet_height=1.5F;
+        }else{
+            pet_width=0.8F;
+            pet_height=0.8F;
+            System.out.println("警告：宠物体型等级越界");
+        }
+
+    }
 
     public EntityPetBox001(World worldIn) {
         super(worldIn);
-        this.setSize(0.8F, 0.8F);
-    }
+        judgeSize(setExp());
+        this.setSize(pet_width, pet_height);
+    }//体积
 
 
     protected static final DataParameter<Byte> PLAYER_CREATED = EntityDataManager.<Byte>createKey(EntityIronGolem.class, DataSerializers.BYTE);
@@ -57,7 +105,7 @@ public class EntityPetBox001 extends EntityGolem {
     private int attackTimer;
     private int holdRoseTick;
 
-    public double box01_health, box01_speed, box01_Resistance;
+    public double box01_health, box01_speed, box01_Resistance,box01_range;
     protected void initEntityAI() {
         this.tasks.addTask(1, new EntityAIAttackMelee(this, 1.0D, true));
         this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.9D, 32.0F));
@@ -83,84 +131,87 @@ public class EntityPetBox001 extends EntityGolem {
     protected void updateAITasks() {
 
     }
-    protected byte setExp(){
-        byte exp=9;
-       return exp;
-    }
+
 
     protected  void judgeExp(byte exp1){
         if(exp1==1){
             box01_health=15.0D;
             box01_speed=0.45D;
             box01_Resistance=0.3D;
+            box01_range=8.0D;
         }else if(exp1==2){
             box01_health=20.0D;
             box01_speed=0.45D;
             box01_Resistance=0.4D;
+            box01_range=16.0D;
         }else if(exp1==3){
             box01_health=25.0D;
             box01_speed=0.45D;
             box01_Resistance=0.5D;
+            box01_range=24.0D;
         }else if(exp1==4){
             box01_health=35.0D;
             box01_speed=0.35D;
             box01_Resistance=0.6D;
+            box01_range=32.0D;
         }else if(exp1==5){
             box01_health=45.0D;
             box01_speed=0.35D;
             box01_Resistance=0.7D;
+            box01_range=32.0D;
         }else if(exp1==6){
             box01_health=55.0D;
             box01_speed=0.35D;
             box01_Resistance=0.7D;
+            box01_range=32.0D;
         }else if(exp1==7){
             box01_health=65.0D;
             box01_speed=0.3D;
             box01_Resistance=0.8D;
+            box01_range=48.0D;
         }else if(exp1==8){
             box01_health=75.0D;
             box01_speed=0.3D;
             box01_Resistance=0.9D;
+            box01_range=48.0D;
         }else if(exp1==9){
             box01_health=85.0D;
             box01_speed=0.3D;
-            box01_Resistance=0.95;
+            box01_Resistance=0.95D;
+            box01_range=48.0D;
+        }else{
+            box01_health=1.0D;
+            box01_speed=0.1D;
+            box01_Resistance=0.1D;
+            box01_range=1.0D;
+            System.out.println("警告：宠物等级越界");
         }
     }
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-
-
         judgeExp(setExp());
-            System.out.println("a:"+ box01_health+"b:"+box01_speed+"c:"+box01_Resistance);
-
             this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(box01_health);
             this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(box01_speed);
             this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(box01_Resistance);
-            System.out.println("a:"+ box01_health+"b:"+box01_speed+"c:"+box01_Resistance);
-          System.out.println("lllllll:"+setExp());
+            this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(box01_range);
 
     }//生物属性
 
-    /**
-     * Decrements the entity's air supply when underwater
-     */
-    protected int decreaseAirSupply(int air) {
-        return air;
-    }
 
     protected void collideWithEntity(Entity entityIn) {
-        if (entityIn instanceof IMob && !(entityIn instanceof EntityCreeper) && this.getRNG().nextInt(20) == 0) {
+        if (entityIn instanceof IMob && entityIn instanceof EntityCreeper && this.getRNG().nextInt(20) == 0) {
             this.setAttackTarget((EntityLivingBase) entityIn);
         }
 
         super.collideWithEntity(entityIn);
-    }
+    }//实体冲突,此处需添加一个宠物主人正在攻击的目标。
 
     /**
      * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
      * use this to react to sunlight and start to burn.
+     * 经常调用，以便实体可以根据需要更新其状态。例如，僵尸和骷髅
+     * *用这个来对阳光做出反应并开始燃烧。
      */
     public void onLivingUpdate() {
         super.onLivingUpdate();
@@ -169,11 +220,11 @@ public class EntityPetBox001 extends EntityGolem {
             --this.attackTimer;
         }
 
-        if (this.holdRoseTick > 0) {
+        /*if (this.holdRoseTick > 0) {
             --this.holdRoseTick;
-        }
+        }*/
 
-        if (this.motionX * this.motionX + this.motionZ * this.motionZ > 2.500000277905201E-7D && this.rand.nextInt(5) == 0) {
+        /*if (this.motionX * this.motionX + this.motionZ * this.motionZ > 2.500000277905201E-7D && this.rand.nextInt(5) == 0) {
             int i = MathHelper.floor(this.posX);
             int j = MathHelper.floor(this.posY - 0.20000000298023224D);
             int k = MathHelper.floor(this.posZ);
@@ -182,26 +233,26 @@ public class EntityPetBox001 extends EntityGolem {
             if (iblockstate.getMaterial() != Material.AIR) {
                 this.world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, this.posX + ((double) this.rand.nextFloat() - 0.5D) * (double) this.width, this.getEntityBoundingBox().minY + 0.1D, this.posZ + ((double) this.rand.nextFloat() - 0.5D) * (double) this.width, 4.0D * ((double) this.rand.nextFloat() - 0.5D), 0.5D, ((double) this.rand.nextFloat() - 0.5D) * 4.0D, Block.getStateId(iblockstate));
             }
-        }
-    }
+        }*/
+    }//状态更新,灰色部分似乎不需要.
 
     /**
      * Returns true if this entity can attack entities of the specified class.
+     * 如果此实体可以攻击指定类的实体，则返回true。
      */
     public boolean canAttackClass(Class<? extends EntityLivingBase> cls) {
         if (this.isPlayerCreated() && EntityPlayer.class.isAssignableFrom(cls)) {
             return false;
         } else {
-            return cls == EntityCreeper.class ? false : super.canAttackClass(cls);
+            return true;
         }
     }
+    //此处需添加一个宠物主人正在攻击的目标。
 
-    public static void registerFixesIronGolem(DataFixer fixer) {
-        EntityLiving.registerFixesMob(fixer, EntityIronGolem.class);
-    }
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
+     * (抽象)将子类实体数据写入NBT的受保护帮助程序方法.
      */
     public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
@@ -210,6 +261,7 @@ public class EntityPetBox001 extends EntityGolem {
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
+     * （抽象）从NBT读取子类实体数据的受保护帮助程序方法。
      */
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
@@ -217,16 +269,16 @@ public class EntityPetBox001 extends EntityGolem {
     }
 
     public boolean attackEntityAsMob(Entity entityIn) {
-        this.attackTimer = 10;
+        //this.attackTimer = 10;
         this.world.setEntityState(this, (byte) 4);
-        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float) (7 + this.rand.nextInt(15)));
+        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float) (2.0F+setExp()*2 + this.rand.nextInt(3)));//伤害值
 
         if (flag) {
-            entityIn.motionY += 0.4000000059604645D;
+            entityIn.motionY += 0.2000000059604645D;//击飞
             this.applyEnchantments(this, entityIn);
         }
-
-        this.playSound(SoundEvents.ENTITY_IRONGOLEM_ATTACK, 1.0F, 1.0F);
+        judgeSound(setExp());
+        this.playSound(AWSound.BOX01_ATTACK_SOUND, pet_attack_volume, 1.0F);
         return flag;
     }
 
@@ -273,7 +325,7 @@ public class EntityPetBox001 extends EntityGolem {
     }//死亡音效
 
     protected void playStepSound(BlockPos pos, Block blockIn) {
-        this.playSound(AWSound.BOX01_HURT_STEP, 1.0F, 1.0F);
+        this.playSound(AWSound.BOX01_STEP_SOUND, 1.0F, 1.0F);
     }//行走音效
 
     @Nullable
