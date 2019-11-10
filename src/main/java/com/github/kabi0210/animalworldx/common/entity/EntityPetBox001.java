@@ -3,10 +3,10 @@ package com.github.kabi0210.animalworldx.common.entity;
 import com.github.kabi0210.animalworldx.AnimalWorldX;
 import com.github.kabi0210.animalworldx.common.init.AWSound;
 import com.github.ksgfk.dawnfoundation.api.annotations.EntityRegistry;
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,21 +16,27 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.*;
-import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 @EntityRegistry(modId = AnimalWorldX.MOD_ID,
         hasCustomFunction = false,
@@ -39,17 +45,20 @@ import javax.annotation.Nullable;
         eggColor1 = 0,
         eggColor2 = 0)
 public class EntityPetBox001 extends EntityGolem {
+    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityTameable.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+    private static final DataParameter<Float> DATA_HEALTH_ID = EntityDataManager.<Float>createKey(EntityWolf.class, DataSerializers.FLOAT);
+    private static EntityAnimal pet_box_001;
     protected float pet_width,pet_height,pet_attack_volume;
-    protected byte setExp(){
-        byte exp=9;
-        return exp;
+    protected byte setLv(){
+        byte lv=1;
+        return lv;
     }
-    protected  void judgeSound(byte exp1){
-        if(exp1>0&&exp1<=3){
+    protected  void judgeSound(byte lv1){
+        if(lv1>0&&lv1<=3){
             pet_attack_volume=0.2F;
-        }else if(exp1<=6){
+        }else if(lv1<=6){
             pet_attack_volume=0.6F;
-        }else if(exp1<=9){
+        }else if(lv1<=9){
             pet_attack_volume=1.0F;
         }else{
             pet_attack_volume=0.1F;
@@ -58,26 +67,26 @@ public class EntityPetBox001 extends EntityGolem {
 
     }
 
-    protected  void judgeSize(byte exp1){
-        if(exp1==1){
+    protected  void judgeSize(byte lv1){
+        if(lv1==1){
             pet_width=0.8F;
             pet_height=0.8F;
-        }else if(exp1==2){
+        }else if(lv1==2){
             pet_width=0.9F;
             pet_height=0.9F;
-        }else if(exp1==3){
+        }else if(lv1==3){
             pet_width=1.0F;
             pet_height=1.0F;
-        }else if(exp1==4){
+        }else if(lv1==4){
             pet_width=1.1F;
             pet_height=1.1F;
-        }else if(exp1==5){
+        }else if(lv1==5){
             pet_width=1.2F;
             pet_height=1.2F;
-        }else if(exp1==6){
+        }else if(lv1==6){
             pet_width=1.3F;
             pet_height=1.3F;
-        }else if(exp1==7||exp1==8||exp1==9){
+        }else if(lv1==7||lv1==8||lv1==9){
             pet_width=1.5F;
             pet_height=1.5F;
         }else{
@@ -90,7 +99,7 @@ public class EntityPetBox001 extends EntityGolem {
 
     public EntityPetBox001(World worldIn) {
         super(worldIn);
-        judgeSize(setExp());
+        judgeSize(setLv());
         this.setSize(pet_width, pet_height);
     }//体积
 
@@ -189,7 +198,7 @@ public class EntityPetBox001 extends EntityGolem {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        judgeExp(setExp());
+        judgeExp(setLv());
             this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(box01_health);
             this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(box01_speed);
             this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(box01_Resistance);
@@ -242,7 +251,7 @@ public class EntityPetBox001 extends EntityGolem {
      */
     public boolean canAttackClass(Class<? extends EntityLivingBase> cls) {
 
-         if (this.isPlayerCreated() && EntityPlayer.class.isAssignableFrom(cls)) {
+         if (EntityPlayer.class.isAssignableFrom(cls)) {
             return false;
         } else {
              return cls == EntityCreeper.class ? true: super.canAttackClass(cls);
@@ -257,7 +266,7 @@ public class EntityPetBox001 extends EntityGolem {
      */
     public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
-        compound.setBoolean("PlayerCreated", this.isPlayerCreated());
+
     }
 
     /**
@@ -272,13 +281,13 @@ public class EntityPetBox001 extends EntityGolem {
     public boolean attackEntityAsMob(Entity entityIn) {
         this.attackTimer = 10;
         this.world.setEntityState(this, (byte) 4);
-        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float) (2.0F+setExp()*2 + this.rand.nextInt(3)));//伤害值
+        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float) (2.0F+setLv()*2 + this.rand.nextInt(3)));//伤害值
 
         if (flag) {
             entityIn.motionY += 0.2000000059604645D;//击飞
             this.applyEnchantments(this, entityIn);
         }
-        judgeSound(setExp());
+        judgeSound(setLv());
         this.playSound(AWSound.BOX01_ATTACK_SOUND, pet_attack_volume, 1.0F);
         return flag;
     }
@@ -290,7 +299,7 @@ public class EntityPetBox001 extends EntityGolem {
     public void handleStatusUpdate(byte id) {
         if (id == 4) {
            this.attackTimer = 10;
-            judgeSound(setExp());
+            judgeSound(setLv());
             this.playSound(AWSound.BOX01_ATTACK_SOUND, pet_attack_volume, 1.0F);
         } else if (id == 11) {
             this.holdRoseTick = 400;
@@ -328,9 +337,17 @@ public class EntityPetBox001 extends EntityGolem {
     }//掉落物
 
 
-    public boolean isPlayerCreated() {
-        return (((Byte) this.dataManager.get(PLAYER_CREATED)).byteValue() & 1) != 0;
+    //以下为驯服代码(待测试)
+
+    public boolean processInteract(EntityPlayer player, EnumHand hand)
+    {
+       // ItemStack itemstack = player.getHeldItem(hand);
+        System.out.println("okkkkkkkkkkkkkk");
+        return true;
     }
+
+
+
 
     public void setPlayerCreated(boolean playerCreated) {
         byte b0 = ((Byte) this.dataManager.get(PLAYER_CREATED)).byteValue();
