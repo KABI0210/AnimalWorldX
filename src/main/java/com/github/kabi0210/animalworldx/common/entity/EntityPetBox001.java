@@ -41,7 +41,7 @@ import javax.annotation.Nullable;
 public class EntityPetBox001 extends EntityGolem {
     protected float pet_width,pet_height,pet_attack_volume;
     protected byte setExp(){
-        byte exp=1;
+        byte exp=9;
         return exp;
     }
     protected  void judgeSound(byte exp1){
@@ -109,7 +109,6 @@ public class EntityPetBox001 extends EntityGolem {
     protected void initEntityAI() {
         this.tasks.addTask(1, new EntityAIAttackMelee(this, 1.0D, true));
         this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.9D, 32.0F));
-        this.tasks.addTask(3, new EntityAIMoveThroughVillage(this, 0.6D, true));
         this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 0.6D));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
@@ -117,7 +116,7 @@ public class EntityPetBox001 extends EntityGolem {
         this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false, new Class[0]));
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityLiving.class, 10, false, true, new Predicate<EntityLiving>() {
             public boolean apply(@Nullable EntityLiving p_apply_1_) {
-                return p_apply_1_ != null && IMob.VISIBLE_MOB_SELECTOR.apply(p_apply_1_) && !(p_apply_1_ instanceof EntityCreeper);
+                return p_apply_1_ != null && IMob.VISIBLE_MOB_SELECTOR.apply(p_apply_1_) ;
             }
         }));
     }
@@ -200,7 +199,8 @@ public class EntityPetBox001 extends EntityGolem {
 
 
     protected void collideWithEntity(Entity entityIn) {
-        if (entityIn instanceof IMob && entityIn instanceof EntityCreeper && this.getRNG().nextInt(20) == 0) {
+
+        if (entityIn instanceof IMob&& entityIn instanceof EntityCreeper&&this.getRNG().nextInt(20) == 0) {
             this.setAttackTarget((EntityLivingBase) entityIn);
         }
 
@@ -241,10 +241,11 @@ public class EntityPetBox001 extends EntityGolem {
      * 如果此实体可以攻击指定类的实体，则返回true。
      */
     public boolean canAttackClass(Class<? extends EntityLivingBase> cls) {
-        if (this.isPlayerCreated() && EntityPlayer.class.isAssignableFrom(cls)) {
+
+         if (this.isPlayerCreated() && EntityPlayer.class.isAssignableFrom(cls)) {
             return false;
         } else {
-            return true;
+             return cls == EntityCreeper.class ? true: super.canAttackClass(cls);
         }
     }
     //此处需添加一个宠物主人正在攻击的目标。
@@ -269,7 +270,7 @@ public class EntityPetBox001 extends EntityGolem {
     }
 
     public boolean attackEntityAsMob(Entity entityIn) {
-        //this.attackTimer = 10;
+        this.attackTimer = 10;
         this.world.setEntityState(this, (byte) 4);
         boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float) (2.0F+setExp()*2 + this.rand.nextInt(3)));//伤害值
 
@@ -288,8 +289,9 @@ public class EntityPetBox001 extends EntityGolem {
     @SideOnly(Side.CLIENT)
     public void handleStatusUpdate(byte id) {
         if (id == 4) {
-            this.attackTimer = 10;
-            this.playSound(SoundEvents.ENTITY_IRONGOLEM_ATTACK, 1.0F, 1.0F);
+           this.attackTimer = 10;
+            judgeSound(setExp());
+            this.playSound(AWSound.BOX01_ATTACK_SOUND, pet_attack_volume, 1.0F);
         } else if (id == 11) {
             this.holdRoseTick = 400;
         } else if (id == 34) {
@@ -306,15 +308,7 @@ public class EntityPetBox001 extends EntityGolem {
         return this.attackTimer;
     }
 
-    public void setHoldingRose(boolean p_70851_1_) {
-        if (p_70851_1_) {
-            this.holdRoseTick = 400;
-            this.world.setEntityState(this, (byte) 11);
-        } else {
-            this.holdRoseTick = 0;
-            this.world.setEntityState(this, (byte) 34);
-        }
-    }
+
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return AWSound.BOX01_HURT_SOUND;
@@ -333,9 +327,6 @@ public class EntityPetBox001 extends EntityGolem {
        return null;
     }//掉落物
 
-    public int getHoldRoseTick() {
-        return this.holdRoseTick;
-    }
 
     public boolean isPlayerCreated() {
         return (((Byte) this.dataManager.get(PLAYER_CREATED)).byteValue() & 1) != 0;
