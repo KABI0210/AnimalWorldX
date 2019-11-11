@@ -58,4 +58,8 @@ public class CommonProxy {
     public ModInfo getInfo() {
         return info;
     }
+
+    public void clear() {
+        info = null;
+    }
 }

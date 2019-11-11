@@ -2,6 +2,7 @@ package com.github.kabi0210.animalworldx;
 
 import com.github.kabi0210.animalworldx.common.CommonProxy;
 import com.github.kabi0210.animalworldx.common.init.AWItems;
+import com.github.ksgfk.dawnfoundation.api.annotations.RegisterManager;
 import com.github.ksgfk.dawnfoundation.api.utility.GithubReleaseUpdateCheck;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -67,6 +68,8 @@ public enum AnimalWorldX {
 
     @Mod.EventHandler
     public void gameStart(FMLLoadCompleteEvent event) {
+        RegisterManager.printStatistics(proxy.getInfo(), logger);
+        proxy.clear();
         GithubReleaseUpdateCheck.getInstance().startCheck(MOD_ID, UPDATE, VERSION, true, logger, null);
     }
 
