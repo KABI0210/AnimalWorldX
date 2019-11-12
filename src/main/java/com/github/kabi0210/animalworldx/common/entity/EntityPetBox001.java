@@ -2,11 +2,13 @@ package com.github.kabi0210.animalworldx.common.entity;
 
 import com.github.kabi0210.animalworldx.AnimalWorldX;
 import com.github.kabi0210.animalworldx.common.init.AWSound;
+import com.github.kabi0210.animalworldx.common.item.itemWoodBlock;
 import com.github.ksgfk.dawnfoundation.api.annotations.EntityRegistry;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockPlanks;
+import net.minecraft.client.gui.toasts.TutorialToast;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,9 +22,9 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,6 +32,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.*;
+import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -45,10 +48,21 @@ import java.util.UUID;
         eggColor1 = 0,
         eggColor2 = 0)
 public class EntityPetBox001 extends EntityGolem {
-    protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityTameable.class, DataSerializers.OPTIONAL_UNIQUE_ID);
-    private static final DataParameter<Float> DATA_HEALTH_ID = EntityDataManager.<Float>createKey(EntityWolf.class, DataSerializers.FLOAT);
-    private static EntityAnimal pet_box_001;
+
+
+
+    private static final DataParameter<Float> DATA_HEALTH_ID = EntityDataManager.<Float>createKey(EntityPetBox001.class, DataSerializers.FLOAT);
     protected float pet_width,pet_height,pet_attack_volume;
+
+
+
+
+   // Item blockwood=Item.getItemFromBlock(Blocks.PLANKS);
+    Item blockwood1= Item.getItemFromBlock(Block.getBlockById(5));
+    int block4=blockwood1.getMetadata(4);
+
+
+
     protected byte setLv(){
         byte lv=1;
         return lv;
@@ -254,7 +268,7 @@ public class EntityPetBox001 extends EntityGolem {
          if (EntityPlayer.class.isAssignableFrom(cls)) {
             return false;
         } else {
-             return cls == EntityCreeper.class ? true: super.canAttackClass(cls);
+             return cls == EntityCreeper.class ? true: true;
         }
     }
     //此处需添加一个宠物主人正在攻击的目标。
@@ -339,10 +353,25 @@ public class EntityPetBox001 extends EntityGolem {
 
     //以下为驯服代码(待测试)
 
+
     public boolean processInteract(EntityPlayer player, EnumHand hand)
     {
-       // ItemStack itemstack = player.getHeldItem(hand);
-        System.out.println("okkkkkkkkkkkkkk");
+        ItemStack itemstack = player.getHeldItem(hand);
+        Item kabi1=(Item)itemstack.getItem();
+        Block kabi=Block.getBlockFromItem(kabi1);
+       if( kabi instanceof BlockPlanks)//是否为木材
+       {
+           itemstack.getMetadata();
+           if (itemstack.getItem() == blockwood1 && block4 == itemstack.getMetadata()) //金和欢树恢复10滴
+           {
+               this.heal((float) 10.0f);
+               return true;
+           } else //其他木材恢复均为5滴
+               {
+               this.heal((float) 5.0f);
+               return true;
+           }
+       }
         return true;
     }
 
