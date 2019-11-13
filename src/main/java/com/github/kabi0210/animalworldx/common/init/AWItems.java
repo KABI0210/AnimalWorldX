@@ -13,4 +13,5 @@ import net.minecraft.item.Item;
 public class AWItems {
     public static final Item LegendGoldIngot = new AWBaseItem("legend_gold_ingot");
     public static final ItemMagicBookOfPortal MagicBookOfPortal = new ItemMagicBookOfPortal();
+
 }

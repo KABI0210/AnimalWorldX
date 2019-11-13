@@ -1,14 +1,14 @@
 package com.github.kabi0210.animalworldx.common.entity;
 
 import com.github.kabi0210.animalworldx.AnimalWorldX;
+import com.github.kabi0210.animalworldx.common.container.MagicBookPortalContainer;
+import com.github.kabi0210.animalworldx.common.init.AWItems;
 import com.github.kabi0210.animalworldx.common.init.AWSound;
-import com.github.kabi0210.animalworldx.common.item.itemWoodBlock;
 import com.github.ksgfk.dawnfoundation.api.annotations.EntityRegistry;
-import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
-import net.minecraft.client.gui.toasts.TutorialToast;
+import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,28 +18,24 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.*;
-import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
+import java.util.Iterator;
+import java.util.List;
 
 @EntityRegistry(modId = AnimalWorldX.MOD_ID,
         hasCustomFunction = false,
@@ -48,20 +44,9 @@ import java.util.UUID;
         eggColor1 = 0,
         eggColor2 = 0)
 public class EntityPetBox001 extends EntityGolem {
-
-
-
-    private static final DataParameter<Float> DATA_HEALTH_ID = EntityDataManager.<Float>createKey(EntityPetBox001.class, DataSerializers.FLOAT);
     protected float pet_width,pet_height,pet_attack_volume;
-
-
-
-
-   // Item blockwood=Item.getItemFromBlock(Blocks.PLANKS);
     Item blockwood1= Item.getItemFromBlock(Block.getBlockById(5));
     int block4=blockwood1.getMetadata(4);
-
-
 
     protected byte setLv(){
         byte lv=1;
@@ -357,26 +342,44 @@ public class EntityPetBox001 extends EntityGolem {
     public boolean processInteract(EntityPlayer player, EnumHand hand)
     {
         ItemStack itemstack = player.getHeldItem(hand);
+        Item magicbook = Item.getByNameOrId("minecraft:apple");
         Item kabi1=(Item)itemstack.getItem();
         Block kabi=Block.getBlockFromItem(kabi1);
        if( kabi instanceof BlockPlanks)//是否为木材
        {
-           itemstack.getMetadata();
-           if (itemstack.getItem() == blockwood1 && block4 == itemstack.getMetadata()) //金和欢树恢复10滴
+           judgeExp(setLv());
+           if ( getHealth()< (float)box01_health)//是否需要进食
            {
-               this.heal((float) 10.0f);
-               return true;
-           } else //其他木材恢复均为5滴
+               itemstack.getMetadata();
+               if (itemstack.getItem() == blockwood1 && block4 == itemstack.getMetadata()) //金和欢树恢复10滴
                {
-               this.heal((float) 5.0f);
-               return true;
+                   if (!player.capabilities.isCreativeMode) {
+                       itemstack.shrink(1);
+                   }
+                   this.heal((float) 10.0f);
+                  //插入药水特效。
+                   //插入动画
+                   return true;
+               } else //其他木材恢复均为5滴
+               {
+                   if (!player.capabilities.isCreativeMode) {
+                       itemstack.shrink(1);
+                   }
+                   this.heal((float) 5.0f);
+                   //插入药水特效
+                   //插入动画
+                   return true;
+               }
+           }else {
+               //此处向客户端输出一句“宠物已填饱肚子了哦”（祈祷有人解决）
+             //插入动画
            }
+       }else if(itemstack.getItem() == AWItems.MagicBookOfPortal )
+       {
+
        }
         return true;
     }
-
-
-
 
     public void setPlayerCreated(boolean playerCreated) {
         byte b0 = ((Byte) this.dataManager.get(PLAYER_CREATED)).byteValue();
