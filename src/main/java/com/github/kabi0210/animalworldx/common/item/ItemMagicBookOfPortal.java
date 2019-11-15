@@ -2,6 +2,7 @@ package com.github.kabi0210.animalworldx.common.item;
 
 import com.github.kabi0210.animalworldx.AnimalWorldX;
 import com.github.kabi0210.animalworldx.api.ILevelProvider;
+import com.github.kabi0210.animalworldx.api.LevelData;
 import com.github.kabi0210.animalworldx.common.container.AWGuiHandler;
 import com.github.ksgfk.dawnfoundation.api.annotations.IModelRegistry;
 import com.google.common.collect.HashBiMap;
@@ -54,7 +55,7 @@ public class ItemMagicBookOfPortal extends AWBaseItem implements IModelRegistry,
     }
 
     //ILevelProvider
-    public void registerLevel(@Nonnull String levelName) {
+    public void registerLevel(@Nonnull String levelName, @Nullable LevelData data) {
         if (Int2StringBiMap.containsValue(levelName)) {
             return;
         }
@@ -62,7 +63,18 @@ public class ItemMagicBookOfPortal extends AWBaseItem implements IModelRegistry,
         id += 1;
     }
 
-    //ILevelProvider
+    @Nullable
+    @Override
+    public LevelData getLevelData(@Nonnull String levelName) {
+        throw new UnsupportedOperationException("Magic Book hasn't level data");
+    }
+
+    @Nullable
+    @Override
+    public LevelData getLevel() {
+        throw new UnsupportedOperationException("Magic Book hasn't level data");
+    }
+
     @Nullable
     public String getLevel(@Nonnull ItemStack stack) {
         if (stack.getTagCompound() == null) {
@@ -75,7 +87,6 @@ public class ItemMagicBookOfPortal extends AWBaseItem implements IModelRegistry,
         return stack.getTagCompound().getString("lv");
     }
 
-    //ILevelProvider
     public void setLevel(@Nonnull ItemStack stack, @Nonnull String level) {
         if (!Int2StringBiMap.containsValue(level)) {
             return;

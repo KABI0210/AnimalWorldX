@@ -2,6 +2,7 @@ package com.github.kabi0210.animalworldx.common;
 
 import com.github.kabi0210.animalworldx.AnimalWorldX;
 import com.github.kabi0210.animalworldx.api.event.RegisterMagicBookLevelEvent;
+import com.github.kabi0210.animalworldx.api.event.RegisterPetBoxLevelEvent;
 import com.github.kabi0210.animalworldx.common.init.AWItems;
 import com.github.ksgfk.dawnfoundation.api.ModInfo;
 import com.github.ksgfk.dawnfoundation.api.annotations.RegisterManager;
@@ -24,6 +25,7 @@ public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         info = ModInfo.create().setModId(AnimalWorldX.MOD_ID).build();
         MinecraftForge.EVENT_BUS.post(new RegisterMagicBookLevelEvent(AWItems.MagicBookOfPortal));
+        MinecraftForge.EVENT_BUS.post(new RegisterPetBoxLevelEvent());
     }
 
     public void init(FMLInitializationEvent event) {
