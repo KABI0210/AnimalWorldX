@@ -1,14 +1,15 @@
 package com.github.kabi0210.animalworldx.common.entity;
 
 import com.github.kabi0210.animalworldx.AnimalWorldX;
-import com.github.kabi0210.animalworldx.common.container.MagicBookPortalContainer;
+import com.github.kabi0210.animalworldx.client.model.ModelPetBox001;
 import com.github.kabi0210.animalworldx.common.init.AWItems;
 import com.github.kabi0210.animalworldx.common.init.AWSound;
 import com.github.ksgfk.dawnfoundation.api.annotations.EntityRegistry;
 import com.google.common.base.Predicate;
+import javafx.scene.input.KeyCode;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
-import net.minecraft.client.renderer.texture.ITextureObject;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,6 +20,7 @@ import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,15 +29,12 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Arrays;
 
 @EntityRegistry(modId = AnimalWorldX.MOD_ID,
         hasCustomFunction = false,
@@ -44,11 +43,23 @@ import java.util.List;
         eggColor1 = 0,
         eggColor2 = 0)
 public class EntityPetBox001 extends EntityGolem {
+   int t =0;
     protected float pet_width,pet_height,pet_attack_volume;
+
     Item blockwood1= Item.getItemFromBlock(Block.getBlockById(5));
     int block4=blockwood1.getMetadata(4);
 
+
+
+    //跳跃
+    //自动获取
+
+
+
+
+
     protected byte setLv(){
+
         byte lv=1;
         return lv;
     }
@@ -206,13 +217,18 @@ public class EntityPetBox001 extends EntityGolem {
     }//生物属性
 
 
+
     protected void collideWithEntity(Entity entityIn) {
 
-        if (entityIn instanceof IMob&& entityIn instanceof EntityCreeper&&this.getRNG().nextInt(20) == 0) {
-            this.setAttackTarget((EntityLivingBase) entityIn);
-        }
 
-        super.collideWithEntity(entityIn);
+            if (entityIn instanceof IMob && entityIn instanceof EntityCreeper && this.getRNG().nextInt(20) == 0) {
+                this.setAttackTarget((EntityLivingBase) entityIn);
+            }
+
+
+            super.collideWithEntity(entityIn);
+
+
     }//实体冲突,此处需添加一个宠物主人正在攻击的目标。
 
     /**
@@ -221,12 +237,29 @@ public class EntityPetBox001 extends EntityGolem {
      * 经常调用，以便实体可以根据需要更新其状态。例如，僵尸和骷髅
      * *用这个来对阳光做出反应并开始燃烧。
      */
+    int i=0;
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
         if (this.attackTimer > 0) {
             --this.attackTimer;
+
         }
+
+
+
+      //  if(true){
+         /*   i++;
+            if(i==10){
+              //  motionY=0.3D;
+               addVelocity(0.0D,0.35D,0.0D);
+            }
+            if(i==30){
+                i=i-30;
+            }*/
+
+      // }
+
 
         /*if (this.holdRoseTick > 0) {
             --this.holdRoseTick;
@@ -243,6 +276,7 @@ public class EntityPetBox001 extends EntityGolem {
             }
         }*/
     }//状态更新,灰色部分似乎不需要.
+
 
     /**
      * Returns true if this entity can attack entities of the specified class.

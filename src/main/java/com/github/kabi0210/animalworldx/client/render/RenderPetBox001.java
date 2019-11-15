@@ -22,6 +22,7 @@ public class RenderPetBox001 extends RenderLiving<EntityPetBox001> {
     public void doRender(EntityPetBox001 entity, double x, double y, double z, float entityYaw, float partialTicks) {
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
         bindEntityTexture(entity);
+
     }
 
     @Nullable
