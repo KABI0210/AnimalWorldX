@@ -14,12 +14,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class CommonEvent {
     @SubscribeEvent
     public static void registerMagicBookLevel(RegisterMagicBookLevelEvent event) {
-        event.getBook().registerLevel("lv1", null);
-        event.getBook().registerLevel("lv2", null);
-        event.getBook().registerLevel("lv3", null);
-        event.getBook().registerLevel("lv4", null);
-        event.getBook().registerLevel("lv5", null);
-        event.getBook().registerLevel("lv6", null);
+        event.registerLevel("lv1", null);
+        event.registerLevel("lv2", null);
+        event.registerLevel("lv3", null);
+        event.registerLevel("lv4", null);
+        event.registerLevel("lv5", null);
+        event.registerLevel("lv6", null);
     }
 
     @SubscribeEvent
