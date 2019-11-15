@@ -5,8 +5,6 @@ import com.github.kabi0210.animalworldx.common.entity.EntityPetBox001;
 import com.github.ksgfk.dawnfoundation.api.annotations.EntityRegistry;
 import net.minecraft.world.World;
 
-import java.util.Optional;
-
 /**
  * @author KSGFK create in 2019/11/15
  */
@@ -22,8 +20,7 @@ public class PetBox001Lv1 extends EntityPetBox001 {
     }
 
     @Override
-    protected void setSpecialLevel() {
-        levelName = "lv1";
-        level = Optional.ofNullable((Level) getLevelData(levelName)).orElseThrow(() -> new IllegalArgumentException("No such level " + levelName));
+    protected String setSpecialLevel() {
+        return "lv1";
     }
 }

@@ -31,6 +31,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * TODO:跳跃、自动获取
@@ -201,7 +202,8 @@ public abstract class EntityPetBox001 extends EntityGolem implements ILevelProvi
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        setSpecialLevel();
+        levelName = setSpecialLevel();
+        level = getCheckedLevel(levelName);
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(level.health);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(level.speed);
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(level.resistance);
@@ -209,9 +211,13 @@ public abstract class EntityPetBox001 extends EntityGolem implements ILevelProvi
     }//生物属性
 
     /**
-     * 在这里设置
+     * 在这里设置宠物等级
      */
-    protected abstract void setSpecialLevel();
+    protected abstract String setSpecialLevel();
+
+    private static Level getCheckedLevel(String levelName) {
+        return Optional.ofNullable(levelMap.get(levelName)).orElseThrow(() -> new IllegalArgumentException("No such level " + levelName));
+    }
 
     @Override
     protected void collideWithEntity(Entity entityIn) {
