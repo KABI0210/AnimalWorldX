@@ -14,4 +14,5 @@ public interface ILevelProvider {
 
     @Nullable
     LevelData getLevel();
+
 }

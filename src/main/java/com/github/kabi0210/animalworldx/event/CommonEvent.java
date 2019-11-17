@@ -4,6 +4,7 @@ import com.github.kabi0210.animalworldx.AnimalWorldX;
 import com.github.kabi0210.animalworldx.api.event.RegisterMagicBookLevelEvent;
 import com.github.kabi0210.animalworldx.api.event.RegisterPetBoxLevelEvent;
 import com.github.kabi0210.animalworldx.common.entity.EntityPetBox001;
+import com.github.kabi0210.animalworldx.common.entity.EntityPetBox001_lv2;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -33,5 +34,15 @@ public class CommonEvent {
                 .setResistance(0.3D)
                 .setRange(8.0D)
                 .build());
+       /* event.registerLevel("lv4", EntityPetBox001_lv2.Level.create()
+                .setAttackVolume(0.2F)
+                .setWidth(1.1F)
+                .setHeight(1.1F)
+                .setHealth(35)
+                .setSpeed(0.45D)
+                .setResistance(0.6D)
+                .setRange(32.0D)
+                .build());*/
     }
+
 }
